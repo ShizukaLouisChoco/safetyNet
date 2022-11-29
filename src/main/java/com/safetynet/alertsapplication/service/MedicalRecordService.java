@@ -3,6 +3,8 @@ package com.safetynet.alertsapplication.service;
 import com.safetynet.alertsapplication.exception.MedicalRecordNotFoundException;
 import com.safetynet.alertsapplication.model.MedicalRecord;
 
+import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 public interface MedicalRecordService {
@@ -13,4 +15,7 @@ public interface MedicalRecordService {
     MedicalRecord updateMedicalRecord(String firstName, String lastName, MedicalRecord medicalRecord) throws MedicalRecordNotFoundException;
 
     void deleteMedicalRecord(String firstName, String lastName);
+
+    List<MedicalRecord> getAllMedicalRecords() throws IOException;
+
 }

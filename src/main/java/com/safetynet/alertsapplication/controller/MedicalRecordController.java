@@ -1,14 +1,15 @@
 package com.safetynet.alertsapplication.controller;
 
 import com.safetynet.alertsapplication.exception.MedicalRecordNotFoundException;
-import com.safetynet.alertsapplication.exception.PersonNotFoundException;
 import com.safetynet.alertsapplication.model.MedicalRecord;
-import com.safetynet.alertsapplication.model.Person;
 import com.safetynet.alertsapplication.service.MedicalRecordService;
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.web.bind.annotation.*;
 
-@Slf4j
+import java.io.IOException;
+import java.util.List;
+
+@Log4j2
 @RestController
 public class MedicalRecordController {
 
@@ -51,4 +52,14 @@ public class MedicalRecordController {
     public void deletePerson(@PathVariable("firstName") final String firstName, @PathVariable("lastName") final String lastName) {
         medicalRecordService.deleteMedicalRecord(firstName, lastName);
     }
+
+    /**
+     * GET - Get all medical records
+     */
+    @GetMapping("/medicalrecords")
+    public List<MedicalRecord> getMedicalRecords() throws IOException {
+
+        return medicalRecordService.getAllMedicalRecords();
+    }
+
 }

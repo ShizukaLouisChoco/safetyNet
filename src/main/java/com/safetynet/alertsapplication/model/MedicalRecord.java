@@ -1,31 +1,36 @@
 package com.safetynet.alertsapplication.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class MedicalRecord implements Serializable {
 
     private String firstName;
 
     private String lastName;
 
-    private Date birthDate;
+    @JsonFormat(pattern = "MM/dd/yyyy", timezone = "Europe/Paris")
+    private Date birthdate;
 
-    private Medication medication;
+    private List<String> medications;
 
-    private Allergy allergy;
+    private List<String> allergies;
 
-    public MedicalRecord update(MedicalRecord medicalRecord){
-        this.setBirthDate(medicalRecord.getBirthDate());
-        this.setMedication(medicalRecord.getMedication());
-        this.setAllergy(medicalRecord.getAllergy());
-        return this;
+    public MedicalRecord update(MedicalRecord medicalrecord){
+        this.birthdate = medicalrecord.getBirthdate();
+        this.medications = medicalrecord.getMedications();
+        this.allergies = medicalrecord.getAllergies();
+        return medicalrecord;
     }
 }

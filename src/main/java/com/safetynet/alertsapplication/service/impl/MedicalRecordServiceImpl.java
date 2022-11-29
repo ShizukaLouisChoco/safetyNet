@@ -7,6 +7,8 @@ import com.safetynet.alertsapplication.service.MedicalRecordService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -37,7 +39,7 @@ public class MedicalRecordServiceImpl implements MedicalRecordService {
         final var currentMedicalRecord = getMedicalRecord(firstName, lastName)
                 .orElseThrow(() -> new MedicalRecordNotFoundException());
 
-        final var updatedMedicalRecord = currentMedicalRecord.update(medicalRecord);
+        final MedicalRecord updatedMedicalRecord = currentMedicalRecord.update(medicalRecord);
 
         return medicalRecordRepository.saveMedicalRecord(updatedMedicalRecord);
     }
@@ -45,6 +47,12 @@ public class MedicalRecordServiceImpl implements MedicalRecordService {
     @Override
     public void deleteMedicalRecord(String firstName, String lastName) {
         medicalRecordRepository.deleteByFirstNameAndLastName(firstName,lastName);
+
+    }
+
+    @Override
+    public List<MedicalRecord> getAllMedicalRecords() throws IOException {
+       return medicalRecordRepository.getAllMedicalRecords();
 
     }
 
