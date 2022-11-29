@@ -3,11 +3,15 @@ package com.safetynet.alertsapplication.controller;
 import com.safetynet.alertsapplication.exception.FireStationNotFoundException;
 import com.safetynet.alertsapplication.model.FireStation;
 import com.safetynet.alertsapplication.service.FireStationService;
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j2;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-@Slf4j
+import java.io.IOException;
+import java.util.List;
+
+@Log4j2
 @RestController
 public class FireStationController {
 
@@ -49,4 +53,14 @@ public class FireStationController {
     public void deleteFireStationn(@PathVariable("address") final String address) {
         fireStationService.deleteFireStation(address);
     }
+
+    /**
+     * GET - Get all fire station
+     */
+    @GetMapping("/firestations")
+    public List<FireStation> getFireStations() throws IOException {
+
+       return fireStationService.getAllFireStations();
+    }
+
 }

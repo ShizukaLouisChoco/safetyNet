@@ -13,11 +13,11 @@ public class FireStation implements Serializable {
 
     private String address;
 
-    private String stationNumber;
+    private String station;
 
     public FireStation update(FireStation fireStation){
-        this.setAddress(fireStation.getAddress());
-        this.setStationNumber(fireStation.getStationNumber());
-        return this;
+        this.address = fireStation.getAddress();
+        this.station = fireStation.getStation();
+        return fireStation;
     }
 }

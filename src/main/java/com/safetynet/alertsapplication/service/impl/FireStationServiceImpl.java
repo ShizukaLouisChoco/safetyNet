@@ -7,6 +7,8 @@ import com.safetynet.alertsapplication.service.FireStationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -27,6 +29,11 @@ public class FireStationServiceImpl implements FireStationService {
     }
 
     @Override
+    public List<FireStation> getAllFireStations() throws IOException {
+        return fireStationRepository.getAllFireStations();
+    }
+
+    @Override
     public FireStation saveFireStation(FireStation fireStation) {
         return fireStationRepository.saveFireStation(fireStation);
     }
@@ -36,7 +43,7 @@ public class FireStationServiceImpl implements FireStationService {
         final var currentFireStation = getFireStation(address)
                 .orElseThrow(() -> new FireStationNotFoundException());
 
-        final var updatedFireStation = currentFireStation.update(fireStation);
+        final FireStation updatedFireStation = currentFireStation.update(fireStation);
 
         return fireStationRepository.saveFireStation(updatedFireStation);
     }
