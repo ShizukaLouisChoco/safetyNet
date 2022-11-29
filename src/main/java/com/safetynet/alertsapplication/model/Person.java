@@ -1,6 +1,8 @@
 package com.safetynet.alertsapplication.model;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
@@ -24,13 +26,11 @@ public class Person implements Serializable {
     private String email;
 
     public Person update(Person person){
-        this.setAddress(person.getAddress());
-        this.setCity(person.getCity());
-        this.setZip(person.getZip());
-        this.setPhone(person.getPhone());
-        this.setEmail(person.getEmail());
-        return this;
+        this.address = person.getAddress();
+        this.city = person.getCity();
+        this.zip = person.getZip();
+        this.phone = person.getPhone();
+        this.email = person.getEmail();
+        return person;
     }
-
-
 }

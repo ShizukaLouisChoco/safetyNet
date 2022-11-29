@@ -1,20 +1,21 @@
-package com.safetynet.alertsapplication.service;
+package com.safetynet.alertsapplication.service.impl;
 
 import com.safetynet.alertsapplication.exception.PersonNotFoundException;
 import com.safetynet.alertsapplication.model.Person;
 import com.safetynet.alertsapplication.repository.PersonRepository;
+import com.safetynet.alertsapplication.service.PersonService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
 @Service
 public class PersonServiceImpl implements PersonService {
+
+    //log.info("PersonServiceImple");
 
     private final PersonRepository personRepository;
 
@@ -23,7 +24,7 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public Optional<Person> getPerson(final String firstName, final String lastName) {
+    public Optional<Person> getPerson(final String firstName, final String lastName) throws IOException {
         return personRepository.findByFirstNameAndLastName(firstName,lastName);
     }
 
@@ -34,8 +35,8 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public Person updatePerson(String firstName, String lastName, Person person) throws PersonNotFoundException {
-        String msg = "No person with that name exists";
+    public Person updatePerson(String firstName, String lastName, Person person) throws PersonNotFoundException, IOException {
+        //String msg = "No person with that name exists";
         final var currentPerson = getPerson(firstName, lastName)
                 .orElseThrow(() -> new PersonNotFoundException());
 
@@ -48,5 +49,10 @@ public class PersonServiceImpl implements PersonService {
     public void deletePerson(String firstName, String lastName) {
         personRepository.deleteByFirstNameAndLastName(firstName,lastName);
 
+    }
+
+    @Override
+    public List<Person> getAllPerson() throws IOException {
+        return personRepository.getAllPerson();
     }
 }
