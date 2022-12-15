@@ -24,13 +24,13 @@ public class FireStationServiceImpl implements FireStationService {
     }
 
     @Override
-    public Optional<FireStation> getFireStation(final String address){
+    public Optional<FireStation> findFireStationByAddress(final String address)  {
         return fireStationRepository.findStationNumberByAddress(address);
     }
 
     @Override
-    public List<FireStation> getAllFireStations() throws IOException {
-        return fireStationRepository.getAllFireStations();
+    public List<FireStation> getAllFireStations()  {
+        return fireStationRepository.getAllFireStation();
     }
 
     @Override
@@ -40,7 +40,7 @@ public class FireStationServiceImpl implements FireStationService {
 
     @Override
     public FireStation updateFireStation(String address, FireStation fireStation) throws FireStationNotFoundException {
-        final var currentFireStation = getFireStation(address)
+        final var currentFireStation = findFireStationByAddress(address)
                 .orElseThrow(() -> new FireStationNotFoundException());
 
         final FireStation updatedFireStation = currentFireStation.update(fireStation);
@@ -50,7 +50,7 @@ public class FireStationServiceImpl implements FireStationService {
 
     @Override
     public void deleteFireStation(String address) {
-        fireStationRepository.deleteByAddress(address);
+        fireStationRepository.deleteFireStationByAddress(address);
     }
 
 

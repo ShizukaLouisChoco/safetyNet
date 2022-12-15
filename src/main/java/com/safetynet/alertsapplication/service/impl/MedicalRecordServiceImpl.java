@@ -7,7 +7,6 @@ import com.safetynet.alertsapplication.service.MedicalRecordService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,37 +22,32 @@ public class MedicalRecordServiceImpl implements MedicalRecordService {
     }
 
     @Override
-    public Optional<MedicalRecord> getMedicalRecord(final String firstName, final String lastName) {
-        return medicalRecordRepository.findByFirstNameAndLastName(firstName,lastName);
+    public Optional<MedicalRecord> findMedicalRecordByFirstNameAndLastName(final String firstName, final String lastName) {
+        return medicalRecordRepository.findMedicalRecordByFirstNameAndLastName(firstName,lastName);
+    }
+    @Override
+    public List<MedicalRecord> getAllMedicalRecords(){
+        return medicalRecordRepository.getAllMedicalRecords();
     }
 
-
     @Override
-    public MedicalRecord saveMedicalRecord(MedicalRecord medicalRecord) {
+    public MedicalRecord saveMedicalRecord(MedicalRecord medicalRecord)  {
         return medicalRecordRepository.saveMedicalRecord(medicalRecord);
     }
-
     @Override
-    public MedicalRecord updateMedicalRecord(String firstName, String lastName, MedicalRecord medicalRecord) throws MedicalRecordNotFoundException {
-        //String msg = "No medical record with that name exists";
-        final var currentMedicalRecord = getMedicalRecord(firstName, lastName)
-                .orElseThrow(() -> new MedicalRecordNotFoundException());
-
+    public MedicalRecord updateMedicalRecord(MedicalRecord medicalRecord)throws MedicalRecordNotFoundException {
+        final var currentMedicalRecord = findMedicalRecordByFirstNameAndLastName(medicalRecord.getFirstName(), medicalRecord.getLastName())
+                .orElseThrow(()-> new MedicalRecordNotFoundException());
         final MedicalRecord updatedMedicalRecord = currentMedicalRecord.update(medicalRecord);
 
-        return medicalRecordRepository.saveMedicalRecord(updatedMedicalRecord);
+        medicalRecordRepository.updateMedicalRecord(updatedMedicalRecord);
+        return updatedMedicalRecord;
     }
 
-    @Override
-    public void deleteMedicalRecord(String firstName, String lastName) {
-        medicalRecordRepository.deleteByFirstNameAndLastName(firstName,lastName);
-
-    }
 
     @Override
-    public List<MedicalRecord> getAllMedicalRecords() throws IOException {
-       return medicalRecordRepository.getAllMedicalRecords();
-
+    public void deleteMedicalRecordByFirstNameAndLastName(String firstName, String lastName) {
+    medicalRecordRepository.deleteMedicalRecordByFirstNameAndLastName(firstName,lastName);
     }
 
 }

@@ -17,7 +17,6 @@ public class MedicalRecordController {
 
     private final MedicalRecordService medicalRecordService;
 
-
     public MedicalRecordController(MedicalRecordService medicalRecordService) {
         this.medicalRecordService = medicalRecordService;
     }
@@ -38,10 +37,10 @@ public class MedicalRecordController {
      * @return The medical record updated
      */
 
-    @PutMapping("/medicalRecord?firstName={firstName}&lastName={lastName}")
+    @PutMapping("/medicalRecord?")
     public MedicalRecord updateMedicalRecord(@PathVariable("firstName") final String firstName, @PathVariable("lastName") final String lastName, @RequestBody MedicalRecord medicalRecord) throws MedicalRecordNotFoundException {
 
-        return medicalRecordService.updateMedicalRecord(firstName, lastName, medicalRecord);
+        return medicalRecordService.updateMedicalRecord(medicalRecord);
     }
 
     /**
@@ -50,7 +49,7 @@ public class MedicalRecordController {
      */
     @DeleteMapping("/medicalRecord?firstName={firstName}&lastName={lastName}")
     public void deletePerson(@PathVariable("firstName") final String firstName, @PathVariable("lastName") final String lastName) {
-        medicalRecordService.deleteMedicalRecord(firstName, lastName);
+        medicalRecordService.deleteMedicalRecordByFirstNameAndLastName(firstName, lastName);
     }
 
     /**

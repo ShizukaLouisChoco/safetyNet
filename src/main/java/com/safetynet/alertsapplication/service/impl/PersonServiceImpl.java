@@ -15,7 +15,7 @@ import java.util.Optional;
 @Service
 public class PersonServiceImpl implements PersonService {
 
-    //log.info("PersonServiceImple");
+    //log.info("PersonServiceImpl");
 
     private final PersonRepository personRepository;
 
@@ -24,7 +24,7 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public Optional<Person> getPerson(final String firstName, final String lastName) throws IOException {
+    public Optional<Person> getPerson(final String firstName, final String lastName) {
         return personRepository.findByFirstNameAndLastName(firstName,lastName);
     }
 

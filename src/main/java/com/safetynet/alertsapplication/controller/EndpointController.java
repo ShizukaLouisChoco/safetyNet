@@ -1,15 +1,17 @@
 package com.safetynet.alertsapplication.controller;
 
+import com.safetynet.alertsapplication.dto.*;
 import com.safetynet.alertsapplication.service.EndpointService;
 import com.safetynet.alertsapplication.service.FireStationService;
 import com.safetynet.alertsapplication.service.MedicalRecordService;
 import com.safetynet.alertsapplication.service.PersonService;
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
-@Slf4j
+@Log4j2
 @RestController
 public class EndpointController {
     //log.info("EndpointController");
@@ -29,17 +31,20 @@ public class EndpointController {
 
     /**
      * Get - get a list of person information & number of adults and children (<=18 yo) who has same fire station number requested
-     * @param stationNumber A String Station number
+     * @param station_number A String Station number
      * @return The list of person information
      * (full name + address + telephone number)
      * & number of adults and children (<=18 yo) who has same fire station number requested
      */
-    @ResponseBody
-    @GetMapping(value = "/firestation?stationNumber={station_number}")
-    public List getFireStationListByFireStationNumber(@PathVariable("station_number")final String stationNumber){
+    //http://localhost:9000/firestation?stationNumber={station_number}
+    @GetMapping(value = "firestation")
+    public @ResponseBody PersonsInformationWithChildNumberDTO01 getPersonsInformationWithAdultAndChildNumberByFireStationNumber(@RequestParam("stationNumber") final String station_number){
 
-        return endpointService.getFireStationListByFireStationNumber(stationNumber);
+        return endpointService.getPersonsInformationWithAdultAndChildNumberByStationNumber(station_number);
     }
+
+
+
 
 
     /**
@@ -49,17 +54,19 @@ public class EndpointController {
      * (full name + age + family number).
      * if there's no child, return String empty
      */
-    @ResponseBody
-    @GetMapping(value = "/childAlert?address={address}")
-    public List getChildAlertListByAddress(@PathVariable("address")final String address){
+    //http://localhost:9000/childAlert?address={address}
 
-        return endpointService.getChildAlertListByAddress(address);
+    @GetMapping(value = "/childAlert")
+    public  @ResponseBody ChildInformationWithFamilyDTO02 getChildInformationByAddress(@RequestParam("address")final String address){
+
+        return  endpointService.getChildInformationByAddress(address);
     }
 
     /**
      * Get - get a list of phone number registered by fire station number requested
      * @param fireStationNumber A String fire station number
      * @return The list of phone number
+     * /phoneAlert?firestation={firestation_number}
      */
     @ResponseBody
     @GetMapping(value = "/phoneAlert?firestation={firestation_number}")
@@ -88,9 +95,9 @@ public class EndpointController {
      * ( family name + phone number + age + medical record)
      */
     @ResponseBody
-    @GetMapping(value = "/stations?stations={a _list_of_station_numbers}")
-    public List getStationsListByListOfStationNumber(@PathVariable("a_list_of_station_numbers")final List fireStationNumbers){
-        return endpointService.getStationsListByListOfStationNumber(fireStationNumbers);
+    @GetMapping(value = "/stations?stations={a_list_of_station_numbers}")
+    public List<PersonsInformationsWithMedicalRecordsByListOfStationNumberDTO04> getPersonsInformationWithMedicalRecordsByListOfStationNumber(@PathVariable("a_list_of_station_numbers")final List<String> fireStationNumbers){
+        return endpointService.getPersonsInformationWithMedicalRecordsByListOfStationNumber(fireStationNumbers);
     }
 
 
@@ -102,8 +109,8 @@ public class EndpointController {
      */
     @ResponseBody
     @GetMapping(value = "/personInfo?firstName={firstName}&lastName={lastName}")
-    public List getPersonInfoListByFirstNameAndLastName(@PathVariable("firstName")final String firstName,@PathVariable("lastName")final String lastName){
-        return endpointService.getPersonInfoListByFirstNameAndLastName(firstName,lastName);
+    public PersonInformationWithMedicalRecordByNameDTO06 getPersonInformationWithMedicalRecordsByFirstNameAndLastName(@PathVariable("firstName")final String firstName, @PathVariable("lastName")final String lastName){
+        return endpointService.getPersonInformationWithMedicalRecordsByFirstNameAndLastName(firstName,lastName);
     }
 
     /**
@@ -111,12 +118,10 @@ public class EndpointController {
      * @param city A String city
      * @return The list of email
      */
-    @ResponseBody
-    @GetMapping(value = "/communityEmail?city={city}")
-    public List getCommunityEmailListByCity(@PathVariable("city")final String city) {
-        return endpointService.getCommunityEmailListByCity(city);
+    //http://localhost:9000/communityEmail?city={city}
+    @GetMapping(value="/communityEmail")
+    public @ResponseBody List<String> getEmailListByCity(@RequestParam("city")final String city) throws IOException {
+        return endpointService.getEmailListByCity(city);
     }
-
-
 
 }

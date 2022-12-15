@@ -4,6 +4,7 @@ import com.safetynet.alertsapplication.exception.PersonNotFoundException;
 import com.safetynet.alertsapplication.model.Person;
 import com.safetynet.alertsapplication.service.PersonService;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;

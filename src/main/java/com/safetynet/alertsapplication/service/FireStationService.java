@@ -14,7 +14,7 @@ public interface FireStationService {
 
     void deleteFireStation(String address);
 
-    Optional<FireStation> getFireStation(String address);
+    Optional<FireStation> findFireStationByAddress(String address) throws IOException;
 
     List<FireStation> getAllFireStations() throws IOException;
 }

@@ -6,11 +6,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Entity;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.List;
 
 @Data
+@Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -21,7 +24,7 @@ public class MedicalRecord implements Serializable {
     private String lastName;
 
     @JsonFormat(pattern = "MM/dd/yyyy", timezone = "Europe/Paris")
-    private Date birthdate;
+    private LocalDate birthdate;
 
     private List<String> medications;
 

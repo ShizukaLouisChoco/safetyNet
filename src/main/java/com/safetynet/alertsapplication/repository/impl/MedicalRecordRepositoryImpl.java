@@ -1,44 +1,63 @@
 package com.safetynet.alertsapplication.repository.impl;
 
-import com.safetynet.alertsapplication.dao.DataStorage;
+import com.safetynet.alertsapplication.dao.impl.DataStorageImpl;
+import com.safetynet.alertsapplication.exception.MedicalRecordNotFoundException;
 import com.safetynet.alertsapplication.model.MedicalRecord;
 import com.safetynet.alertsapplication.repository.MedicalRecordRepository;
-import org.springframework.stereotype.Repository;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
 
-@Repository
+@org.springframework.stereotype.Repository
 public class MedicalRecordRepositoryImpl implements MedicalRecordRepository {
 
-    private final DataStorage dataStorage;
+    private final DataStorageImpl dataStorageImpl;
 
-    public MedicalRecordRepositoryImpl(DataStorage dataStorage) {
-        this.dataStorage = dataStorage;
+    public MedicalRecordRepositoryImpl(DataStorageImpl dataStorageImpl) {
+        this.dataStorageImpl = dataStorageImpl;
+
     }
 
 
     @Override
-    public Optional<MedicalRecord> findByFirstNameAndLastName(String firstName, String lastName) {
-        return Optional.empty();
+    public Optional<MedicalRecord> findMedicalRecordByFirstNameAndLastName(final String firstName, final String lastName) {
+        return getAllMedicalRecords()
+                .stream()
+                .filter(allMedicalRecords -> allMedicalRecords.getFirstName().equals(firstName) && allMedicalRecords.getLastName().equals(lastName))
+                .findFirst();
+
+    }
+    @Override
+    public List<MedicalRecord> getAllMedicalRecords(){
+        return dataStorageImpl.getData().getMedicalrecords();
     }
 
     @Override
-    public void deleteByFirstNameAndLastName(String firstName, String lastName) {
+    public MedicalRecord saveMedicalRecord(MedicalRecord medicalRecord)  {
+        if(findMedicalRecordByFirstNameAndLastName(medicalRecord.getFirstName(),medicalRecord.getLastName()).isPresent()){
+            throw new IllegalArgumentException("Medical Record exists");
+        }
+        getAllMedicalRecords().add(medicalRecord);
+        return medicalRecord;
+    }
+    @Override
+    public void updateMedicalRecord(MedicalRecord updatedMedicalRecord)throws MedicalRecordNotFoundException {
+        var existingMedicalRecord = findMedicalRecordByFirstNameAndLastName(updatedMedicalRecord.getLastName(), updatedMedicalRecord.getLastName())
+                .orElseThrow(() -> new MedicalRecordNotFoundException());
+
+        var index = getAllMedicalRecords().indexOf(existingMedicalRecord);
+        getAllMedicalRecords().add(index, updatedMedicalRecord);
 
     }
 
+
     @Override
-    public MedicalRecord saveMedicalRecord(MedicalRecord medicalRecord) {
-        return null;
+    public void deleteMedicalRecordByFirstNameAndLastName(String firstName, String lastName) {
+        findMedicalRecordByFirstNameAndLastName(firstName,lastName).ifPresent(m->removeMedicalRecord(m));
     }
 
-    @Override
-    public List<MedicalRecord> getAllMedicalRecords() throws IOException {
-
-        return dataStorage.getMedicalRecords();
-
+    private void removeMedicalRecord(MedicalRecord medicalRecord){
+        dataStorageImpl.getData().getMedicalrecords().remove(medicalRecord);
     }
 }
