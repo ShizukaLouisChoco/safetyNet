@@ -1,13 +1,11 @@
 package com.safetynet.alertsapplication.repository;
 
-import com.safetynet.alertsapplication.exception.PersonNotFoundException;
 import com.safetynet.alertsapplication.model.Person;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
-
 
 public interface PersonRepository {
     Optional<Person> findByFirstNameAndLastName(String firstName, String lastName);

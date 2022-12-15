@@ -1,6 +1,7 @@
 package com.safetynet.alertsapplication.dao.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.safetynet.alertsapplication.dao.DataStorage;
 import com.safetynet.alertsapplication.model.Person;
 import lombok.extern.log4j.Log4j2;
@@ -23,7 +24,7 @@ public class DataStorageImpl implements DataStorage {
     private final AllData data;
 
     public DataStorageImpl() throws IOException {
-        ObjectMapper objectMapper = new ObjectMapper();
+        ObjectMapper objectMapper = new ObjectMapper().registerModule(new JavaTimeModule());
         File file = new ClassPathResource("data.json").getFile();
         //log.info("File address = " + file.getAbsolutePath());
         this.data = objectMapper.readValue(file, AllData.class);

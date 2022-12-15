@@ -1,13 +1,13 @@
 package com.safetynet.alertsapplication.repository;
 
 import com.safetynet.alertsapplication.model.FireStation;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-@org.springframework.stereotype.Repository
+@Repository
 public interface FireStationRepository {
     Optional<FireStation> findStationNumberByAddress(String address);
 

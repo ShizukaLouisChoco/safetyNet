@@ -9,10 +9,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Component;
 
-@SpringBootApplication(scanBasePackages = {"com.safetynet.alertsapplication","com.safetynet.alertsapplication"})
-@ComponentScan(basePackages = "com.safetynet.alertsapplication.service")
-@EntityScan("com.safetynet.alertsapplication.model")
-@EnableJpaRepositories("com.safetynet.alertsapplication.repository")
+cor@SpringBootApplication
 public class AlertsApplication extends SpringBootServletInitializer {
 
 
