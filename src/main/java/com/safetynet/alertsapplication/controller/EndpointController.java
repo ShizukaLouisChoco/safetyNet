@@ -69,14 +69,16 @@ public class EndpointController {
      * /phoneAlert?firestation={firestation_number}
      */
     @ResponseBody
-    @GetMapping(value = "/phoneAlert?firestation={firestation_number}")
-    public List getPhoneAlertListByFireStationNumber(@PathVariable("firestation_number")final String fireStationNumber){
-        return endpointService.getPhoneAlertListByFireStationNumber(fireStationNumber);
+    @GetMapping(value = "/phoneAlert")
+    public List<String> getPhoneNumberListByFireStationNumber(@PathVariable("firestation_number")final String fireStationNumber){
+        return endpointService.getPhoneNumberListByFireStationNumber(fireStationNumber);
     }
 
 
     /**
-     * Get - get a list of person info & fire station number by address requested
+     * Get - Cette url doit retourner la liste des habitants vivant à l’adresse donnée ainsi que le numéro de la caserne
+     * de pompiers la desservant. La liste doit inclure le nom, le numéro de téléphone, l'âge et les antécédents médicaux
+     * (médicaments, posologie et allergies) de chaque personne.
      * @param address A String  address
      * @return The list of person info
      * (lastName, phone number, age, medical record)
@@ -84,8 +86,8 @@ public class EndpointController {
      */
     @ResponseBody
     @GetMapping(value = "/fire?address={address}")
-    public List getFireListByAddress(@PathVariable("address")final String address){
-       return endpointService.getFireListByAddress(address);
+    public PersonsInformationWithMedicalRecordsAndFireStationNumberDTO05 getPersonsInformationWithMedicalRecordsAndFirestationNumberByAddress(@PathVariable("address") final String address) {
+        return endpointService.getPersonsInformationWithMedicalRecordsAndFirestationNumberByAddress(address);
     }
 
      /**

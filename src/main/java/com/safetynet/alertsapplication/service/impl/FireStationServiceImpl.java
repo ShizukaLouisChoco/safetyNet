@@ -7,7 +7,6 @@ import com.safetynet.alertsapplication.service.FireStationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,7 +44,8 @@ public class FireStationServiceImpl implements FireStationService {
 
         final FireStation updatedFireStation = currentFireStation.update(fireStation);
 
-        return fireStationRepository.saveFireStation(updatedFireStation);
+        fireStationRepository.updateFireStation(updatedFireStation);
+        return updatedFireStation;
     }
 
     @Override

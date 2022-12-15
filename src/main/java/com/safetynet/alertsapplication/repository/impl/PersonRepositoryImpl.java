@@ -63,4 +63,26 @@ public class PersonRepositoryImpl implements PersonRepository {
     public List<Person> getAllPerson() {
         return dataStorageImpl.getData().getPersons();
     }
+
+    @Override
+    public Stream<Person> getAllByAddress(String address){
+        return  dataStorageImpl.getPersons()
+                .stream()
+                .filter(p -> p.getAddress().equals(address));
+    }
+    @Override
+    public Stream<Person> getPersonByAddressList(List<String> fireStationAddressList) {
+        return dataStorageImpl
+                .getPersons()
+                .stream()
+                .filter(p ->  fireStationAddressList.contains(p.getAddress()));
+    }
+
+    @Override
+    public Stream<Person> getPersonByCity(String city) {
+        return dataStorageImpl
+                .getPersons()
+                .stream()
+                .filter(f -> f.getCity().equals(city));
+    }
 }

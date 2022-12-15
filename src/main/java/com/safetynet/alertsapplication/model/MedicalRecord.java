@@ -36,4 +36,8 @@ public class MedicalRecord implements Serializable {
         this.allergies = medicalrecord.getAllergies();
         return medicalrecord;
     }
+
+    public int getAge() {
+        return Period.between(birthdate, LocalDate.now()).getYears();
+    }
 }

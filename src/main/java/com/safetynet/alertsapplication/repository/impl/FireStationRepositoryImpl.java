@@ -1,6 +1,7 @@
 package com.safetynet.alertsapplication.repository.impl;
 
-import com.safetynet.alertsapplication.dao.DataStorage;
+import com.safetynet.alertsapplication.dao.impl.DataStorageImpl;
+import com.safetynet.alertsapplication.exception.FireStationNotFoundException;
 import com.safetynet.alertsapplication.model.FireStation;
 
 import com.safetynet.alertsapplication.repository.FireStationRepository;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 @Repository
 public class FireStationRepositoryImpl implements FireStationRepository {
@@ -49,6 +51,18 @@ public class FireStationRepositoryImpl implements FireStationRepository {
     }
 
     @Override
+    public FireStation saveFireStation(FireStation fireStation) {
+
+        if (findStationNumberByAddress(fireStation.getAddress()).isPresent()) {
+            throw new IllegalArgumentException("FireStation exists");
+        }
+
+        getAllFireStation().add(fireStation);
+
+        return fireStation;
+    }
+
+    @Override
     public void updateFireStation(FireStation updatedFireStation) throws FireStationNotFoundException {
         var existingStation = findStationNumberByAddress(updatedFireStation.getAddress())
                 .orElseThrow(() -> new FireStationNotFoundException());
@@ -62,4 +76,30 @@ public class FireStationRepositoryImpl implements FireStationRepository {
         return dataStorageImpl.getData().getFirestations();
     }
 
+    private void removeFireStation(FireStation fireStation) {
+        dataStorageImpl.getData().getFirestations().remove(fireStation);
+    }
+
+    @Override
+    public Stream<FireStation> getAllFireStationByStationNumber(String number) {
+        return dataStorageImpl
+                .getFireStations()
+                .stream()
+                .filter(f -> f.getStation().equals(number));
+    }
+
+    @Override
+    public Stream<FireStation> getAllFireStationByAddress(String address) {
+        return dataStorageImpl
+                .getFireStations()
+                .stream()
+                .filter(f -> f.getAddress().equals(address));
+    }
+    @Override
+    public Stream<FireStation> getAllFireStationByStationNumberList(List<String> fireStationNumbers) {
+        return dataStorageImpl
+                .getFireStations()
+                .stream()
+                .filter(f -> fireStationNumbers.contains(f.getStation()));
+    }
 }

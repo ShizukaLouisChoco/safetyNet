@@ -10,9 +10,9 @@ public interface EndpointService {
 
     ChildInformationWithFamilyDTO02 getChildInformationByAddress(String address);
 
-    List getPhoneAlertListByFireStationNumber(String fireStationNumber);
+    List<String> getPhoneNumberListByFireStationNumber(String fireStationNumber);
 
-    List getFireListByAddress(String address);
+    PersonsInformationWithMedicalRecordsAndFireStationNumberDTO05 getPersonsInformationWithMedicalRecordsByAddress(String address);
 
     abstract List<PersonsInformationsWithMedicalRecordsByListOfStationNumberDTO04> getPersonsInformationWithMedicalRecordsByListOfStationNumber(List<String> fireStationNumbers);
 

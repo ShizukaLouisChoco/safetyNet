@@ -20,4 +20,10 @@ public interface PersonRepository {
     Person savePerson(Person person);
 
     List<Person> getAllPerson() throws IOException;
+
+    Stream<Person> getAllByAddress(String address);
+
+    Stream<Person> getPersonByAddressList(List<String> fireStationAddressList);
+
+    Stream<Person> getPersonByCity(String city);
 }
