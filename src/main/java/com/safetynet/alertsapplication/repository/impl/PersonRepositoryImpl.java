@@ -1,6 +1,6 @@
 package com.safetynet.alertsapplication.repository.impl;
 
-import com.safetynet.alertsapplication.dao.impl.DataStorage;
+import com.safetynet.alertsapplication.dao.DataStorage;
 import com.safetynet.alertsapplication.exception.PersonNotFoundException;
 import com.safetynet.alertsapplication.model.Person;
 import com.safetynet.alertsapplication.repository.PersonRepository;

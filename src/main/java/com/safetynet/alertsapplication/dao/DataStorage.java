@@ -15,6 +15,7 @@ import java.util.List;
 
 
 public interface DataStorage {
+    AllData getData();
 
     List<Person> getPersons() ;
 
