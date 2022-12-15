@@ -1,7 +1,6 @@
 package com.safetynet.alertsapplication.dao.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.safetynet.alertsapplication.dao.DataStorage;
 import com.safetynet.alertsapplication.model.Person;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.core.io.ClassPathResource;
@@ -17,12 +16,12 @@ import com.safetynet.alertsapplication.model.*;
 
 @Log4j2
 @Component
-public class DataStorageImpl implements DataStorage {
+public class DataStorage implements com.safetynet.alertsapplication.dao.DataStorage {
 
     @Getter
     private final AllData data;
 
-    public DataStorageImpl() throws IOException {
+    public DataStorage() throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         File file = new ClassPathResource("data.json").getFile();
         //log.info("File address = " + file.getAbsolutePath());

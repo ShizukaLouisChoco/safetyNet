@@ -1,6 +1,6 @@
 package com.safetynet.alertsapplication.repository.impl;
 
-import com.safetynet.alertsapplication.dao.impl.DataStorageImpl;
+import com.safetynet.alertsapplication.dao.impl.DataStorage;
 import com.safetynet.alertsapplication.exception.PersonNotFoundException;
 import com.safetynet.alertsapplication.model.Person;
 import com.safetynet.alertsapplication.repository.PersonRepository;
@@ -13,14 +13,14 @@ import java.util.stream.Stream;
 @Repository
 public class PersonRepositoryImpl implements PersonRepository {
 
-    private final DataStorageImpl dataStorageImpl;
+    private final DataStorage dataStorage;
 
-    public PersonRepositoryImpl(DataStorageImpl dataStorageImpl) {
-        this.dataStorageImpl = dataStorageImpl;
+    public PersonRepositoryImpl(DataStorage dataStorageImpl) {
+        this.dataStorage = dataStorageImpl;
     }
 
 
-    public static PersonRepositoryImpl createPersonRepositoryImpl(DataStorageImpl dataStorageImpl) {
+    public static PersonRepositoryImpl createPersonRepositoryImpl(DataStorage dataStorageImpl) {
         return new PersonRepositoryImpl(dataStorageImpl);
     }
 
@@ -39,7 +39,7 @@ public class PersonRepositoryImpl implements PersonRepository {
     }
 
     private void removePerson(Person person) {
-        dataStorageImpl.getData().getPersons().remove(person);
+        dataStorage.getData().getPersons().remove(person);
     }
 
     @Override
@@ -61,18 +61,18 @@ public class PersonRepositoryImpl implements PersonRepository {
 
     @Override
     public List<Person> getAllPerson() {
-        return dataStorageImpl.getData().getPersons();
+        return dataStorage.getData().getPersons();
     }
 
     @Override
     public Stream<Person> getAllByAddress(String address){
-        return  dataStorageImpl.getPersons()
+        return  dataStorage.getPersons()
                 .stream()
                 .filter(p -> p.getAddress().equals(address));
     }
     @Override
     public Stream<Person> getPersonByAddressList(List<String> fireStationAddressList) {
-        return dataStorageImpl
+        return dataStorage
                 .getPersons()
                 .stream()
                 .filter(p ->  fireStationAddressList.contains(p.getAddress()));
@@ -80,7 +80,7 @@ public class PersonRepositoryImpl implements PersonRepository {
 
     @Override
     public Stream<Person> getPersonByCity(String city) {
-        return dataStorageImpl
+        return dataStorage
                 .getPersons()
                 .stream()
                 .filter(f -> f.getCity().equals(city));

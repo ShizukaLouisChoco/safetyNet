@@ -1,21 +1,22 @@
 package com.safetynet.alertsapplication.repository.impl;
 
-import com.safetynet.alertsapplication.dao.impl.DataStorageImpl;
+import com.safetynet.alertsapplication.dao.impl.DataStorage;
 import com.safetynet.alertsapplication.exception.MedicalRecordNotFoundException;
 import com.safetynet.alertsapplication.model.MedicalRecord;
 import com.safetynet.alertsapplication.repository.MedicalRecordRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
 
-@org.springframework.stereotype.Repository
+@Repository
 public class MedicalRecordRepositoryImpl implements MedicalRecordRepository {
 
-    private final DataStorageImpl dataStorageImpl;
+    private final DataStorage dataStorage;
 
-    public MedicalRecordRepositoryImpl(DataStorageImpl dataStorageImpl) {
-        this.dataStorageImpl = dataStorageImpl;
+    public MedicalRecordRepositoryImpl(DataStorage dataStorageImpl) {
+        this.dataStorage = dataStorageImpl;
 
     }
 
@@ -30,7 +31,7 @@ public class MedicalRecordRepositoryImpl implements MedicalRecordRepository {
     }
     @Override
     public List<MedicalRecord> getAllMedicalRecords(){
-        return dataStorageImpl.getData().getMedicalrecords();
+        return dataStorage.getData().getMedicalrecords();
     }
 
     @Override
@@ -58,6 +59,6 @@ public class MedicalRecordRepositoryImpl implements MedicalRecordRepository {
     }
 
     private void removeMedicalRecord(MedicalRecord medicalRecord){
-        dataStorageImpl.getData().getMedicalrecords().remove(medicalRecord);
+        dataStorage.getData().getMedicalrecords().remove(medicalRecord);
     }
 }

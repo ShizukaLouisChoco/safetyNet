@@ -1,7 +1,6 @@
 package com.safetynet.alertsapplication.service.impl;
 
 import com.safetynet.alertsapplication.dao.DataStorage;
-import com.safetynet.alertsapplication.dao.impl.DataStorageImpl;
 import com.safetynet.alertsapplication.dto.*;
 import com.safetynet.alertsapplication.exception.FireStationNotFoundException;
 import com.safetynet.alertsapplication.exception.MedicalRecordNotFoundException;
@@ -11,8 +10,6 @@ import com.safetynet.alertsapplication.model.MedicalRecord;
 import com.safetynet.alertsapplication.model.Person;
 import com.safetynet.alertsapplication.repository.FireStationRepository;
 import com.safetynet.alertsapplication.repository.PersonRepository;
-import com.safetynet.alertsapplication.repository.impl.FireStationRepositoryImpl;
-import com.safetynet.alertsapplication.repository.impl.PersonRepositoryImpl;
 import com.safetynet.alertsapplication.service.EndpointService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;

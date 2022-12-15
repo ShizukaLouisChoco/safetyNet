@@ -8,7 +8,6 @@ import javax.persistence.Entity;
 import java.util.List;
 
 @Data
-@Entity
 @NoArgsConstructor
 @AllArgsConstructor
 public class Allergy {
